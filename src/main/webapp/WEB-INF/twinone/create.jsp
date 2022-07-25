@@ -18,9 +18,9 @@
 			<%-- <form:form action='/store/twinone/new' method='post' modelAttribute='twinone'> --%>
 			<form:form action='/twinone/new' method='post' modelAttribute='twinone'>
 			
-				
-				<!-- use below, in concert with Mdl file, to capture createdBy_id value -->
-				<%-- <form:hidden value="${user.id}" path="userMdl" /> --%>
+				<!-- begin: JRF trying to tie user to twinone -->
+				<form:hidden value="${user.id}" path="userMdl" />
+				<!-- end: JRF trying to tie user to twinone -->
 				
 				<div class="form-group">
 					<form:label path="twinoneName" for="twinoneName">twinoneName</form:label>
@@ -35,7 +35,11 @@
 					<p class="errorText"><form:errors path="twinoneDesc" /></p>
 				</div> 				
 
-				<p>!!! NEED TO ADD FIELD FOR PRICE !!!</p>
+				<div class="form-group">
+					<form:label path="twinoneDate" for="twinoneDate">twinoneDate</form:label>
+					<form:input type="date" class="form-control" path="twinoneDate" />
+					<p class="errorText"><form:errors path="twinoneDate" /></p>
+				</div>
 <%-- 		
 				<div class="form-group">
 					<form:select path="dojoMdl">

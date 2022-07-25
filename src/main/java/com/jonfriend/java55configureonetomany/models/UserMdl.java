@@ -44,6 +44,19 @@ public class UserMdl {
     @OneToMany(mappedBy="userMdl", fetch = FetchType.LAZY)
     private List<PublicationMdl> pubList; 
     
+    // begin: JRF trying to tie this to twinone
+    
+    @OneToMany(mappedBy="userMdl", fetch = FetchType.LAZY)
+    private List<TwinoneMdl> twinoneList; 
+    
+    // end: JRF trying to tie this to twinone
+    
+  //**************************************************
+  //**************************************************
+  // JRF note: looks like getters/setters NOT affected by the @OneToMany additions.
+  //**************************************************
+  //**************************************************
+    
     public UserMdl() {}
 
     // begin G/S

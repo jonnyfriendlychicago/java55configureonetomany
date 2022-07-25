@@ -12,10 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn; // JRF manually adding
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 //import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
 
 import org.springframework.format.annotation.DateTimeFormat;
 //JRF: keep below OUT when building the autoJoinTbl solution
@@ -41,6 +44,10 @@ public class TwinoneMdl {
 	private String twinoneDesc;
     
 	private float price;
+	
+//	@Future
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date twinoneDate;
     
     // end: entity-specific table fields
     
@@ -56,6 +63,14 @@ public class TwinoneMdl {
     
     // end: code for automatically-created join table
     
+    // begin: JRF trying to tie user to twinone
+    
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="createdby_id")
+	private UserMdl userMdl;
+    
+    // end: JRF trying to tie user to twinone
+    
     // instantiate the model: 
     public TwinoneMdl() {}
     
@@ -67,10 +82,9 @@ public class TwinoneMdl {
     @PreUpdate
     protected void onUpdate(){
         this.updatedAt = new Date();
+        // begin: getters and setters
     }
 
-    // begin: getters and setters
-    
 	public Long getId() {
 		return id;
 	}
@@ -119,6 +133,14 @@ public class TwinoneMdl {
 		this.price = price;
 	}
 
+	public Date getTwinoneDate() {
+		return twinoneDate;
+	}
+
+	public void setTwinoneDate(Date twinoneDate) {
+		this.twinoneDate = twinoneDate;
+	}
+
 	public List<TwintwoMdl> getTwintwoMdl() {
 		return twintwoMdl;
 	}
@@ -127,7 +149,17 @@ public class TwinoneMdl {
 		this.twintwoMdl = twintwoMdl;
 	}
 
-    // end: getters and setters
+	public UserMdl getUserMdl() {
+		return userMdl;
+	}
+
+	public void setUserMdl(UserMdl userMdl) {
+		this.userMdl = userMdl;
+	}
+
+    
+    
+       // end: getters and setters
     
 // end mdl
 }

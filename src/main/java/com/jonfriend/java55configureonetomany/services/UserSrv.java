@@ -1,5 +1,6 @@
 package com.jonfriend.java55configureonetomany.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.jonfriend.java55configureonetomany.models.LoginUserMdl;
+import com.jonfriend.java55configureonetomany.models.TwinoneMdl;
 import com.jonfriend.java55configureonetomany.models.UserMdl;
 import com.jonfriend.java55configureonetomany.repositories.UserRpo;
 
@@ -82,15 +84,11 @@ public class UserSrv{
     	
     	potentialUser.isPresent(); //notsureif needed 
     	
-    	
+    	// future development ideas: 
     	// TO-DO: Additional validations!
     	
     	// TO-DO - Reject values:
         
-    	// Find user in the DB by email
-        // Reject if NOT present
-        
-        // Reject if BCrypt password match fails
     
         // Return null if result has errors
         // Otherwise, return the user object
@@ -110,5 +108,12 @@ public class UserSrv{
     	return null;
     }
     
+ // returns all user
+ 	public List<UserMdl> returnAll(){
+ 		return userRpo.findAll();
+ 	}
     
+
+ 	
+ 	
 }

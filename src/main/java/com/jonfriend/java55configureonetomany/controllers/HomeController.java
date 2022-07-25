@@ -3,6 +3,7 @@ package com.jonfriend.java55configureonetomany.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class HomeController {
 			, HttpSession session) {
         
 // ********************************************************************
-// AUTHENTICATION CONTROLS
+// AUTHENTICATION METHODS
 // ********************************************************************
 		
 		// *** REDIRECT AUTH USERS TO /home METHOD -- DON'T EXPOSE REG/LOGIN index page TO ALREADY AUTH'ED USERS ***
@@ -85,6 +86,7 @@ public class HomeController {
         model.addAttribute("countToShow", currentCount);
 //        End: counter stuff
         
+        System.out.println("Page Display: login/reg"); 
 		return "index.jsp"; 
 	}
 
@@ -138,41 +140,8 @@ public class HomeController {
 	    return "redirect:/home";
         // see comment in /register method regarding above redirect. Same thing applies.   
     }
-    
-    @GetMapping("/home")
-	public String home(
-			Model model
-			, HttpSession session) {
-	 
-		// Redirect all non-auth users to /logout method.
-		if(session.getAttribute("userId") == null) {return "redirect:/logout";}
-		
-		// create userId object from session.userid value.  We then use this object to display on page, and use for various validations. 
-		Long userId = (Long) session.getAttribute("userId");
-		model.addAttribute("user", userSrv.findById(userId));
-		
-//		JRF-FRI: begin cut to HomeController
 
-		List<ProductMdl> intVar1 = productSrv.allProducts();
-		model.addAttribute("productList", intVar1);
-
-		List<CategoryMdl> intVar2 = categorySrv.allCategories();
-		model.addAttribute("categoryList", intVar2);
-		
-//		JRF-FRI: end cut to HomeController 
-		
-		List<TwinoneMdl> intVar3 = twinoneSrv.returnAll();
-		model.addAttribute("twinoneList", intVar3);
-
-		List<TwintwoMdl> intVar4 = twintwoSrv.returnAll();
-		model.addAttribute("twintwoList", intVar4);
-		
-	    return "home.jsp";
-		// above is our dashboard; below is whatever "home app" you like to be skipping to.
-//	    return "redirect:/store";
-	    
-	}
-    
+     
     @GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.setAttribute("userId", null);
@@ -180,7 +149,7 @@ public class HomeController {
 	}
 
  // ********************************************************************
- // MISCELLANEOUS CONTROLS
+ // MISCELLANEOUS METHODS
  // ********************************************************************
     
 	@RequestMapping("/reset-counter/")
@@ -232,6 +201,71 @@ public class HomeController {
 		
 		return "time.jsp"; 
 	}
+	   
+//********************************************************************
+// HOME/PROFILE/ETC METHODS
+//********************************************************************
+		
+	    @GetMapping("/home")
+		public String home(
+				Model model
+				, HttpSession session) {
+		 
+			// Redirect all non-auth users to /logout method.
+			if(session.getAttribute("userId") == null) {return "redirect:/logout";}
+			
+			// create userId object from session.userid value.  We then use this object to display on page, and use for various validations. 
+			Long userId = (Long) session.getAttribute("userId");
+			model.addAttribute("user", userSrv.findById(userId));
+			
+//			JRF-FRI: begin cut to HomeController
 
+			List<ProductMdl> intVar1 = productSrv.allProducts();
+			model.addAttribute("productList", intVar1);
+
+			List<CategoryMdl> intVar2 = categorySrv.allCategories();
+			model.addAttribute("categoryList", intVar2);
+			
+//			JRF-FRI: end cut to HomeController 
+			
+			List<TwinoneMdl> intVar3 = twinoneSrv.returnAll();
+			model.addAttribute("twinoneList", intVar3);
+
+			List<TwintwoMdl> intVar4 = twintwoSrv.returnAll();
+			model.addAttribute("twintwoList", intVar4);
+			
+			// JRF 724
+			List<UserMdl> intVar5 = userSrv.returnAll();
+			model.addAttribute("userList", intVar5);
+			
+		    return "home.jsp";
+			// above is our dashboard; below is whatever "home app" you like to be skipping to.
+//		    return "redirect:/store";
+		    
+		}
+
+		// view record
+		@GetMapping("/profile/{id}")
+		public String showProfile(
+				@PathVariable("id") Long id
+				, Model model
+				, HttpSession session
+				) {
+			
+			// If no userId is found in session, redirect to logout.  JRF: put this on basically all methods now, except the login/reg pages
+			if(session.getAttribute("userId") == null) {return "redirect:/logout";}
+			
+			// We get the userId from our session (we need to cast the result to a Long as the 'session.getAttribute("userId")' returns an object
+			Long userId = (Long) session.getAttribute("userId");
+			model.addAttribute("user", userSrv.findById(userId));
+			
+			UserMdl intVar = userSrv.findById(id);
+			
+			model.addAttribute("userProfile", intVar);
+//			model.addAttribute("assignedCategories", twintwoSrv.getAssignedTwinones(intVar));
+//			model.addAttribute("unassignedCategories", twintwoSrv.getUnassignedTwinones(intVar));
+			
+			return "profile/record.jsp";
+		}
 // end of methods
 }

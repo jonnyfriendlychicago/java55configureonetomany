@@ -34,7 +34,7 @@ public class TwinoneSrv {
 		twinoneRpo.delete(x);
 	}
 	
-	// returns one twinone by id >> no need rename
+	// returns one twinone by id 
 	public TwinoneMdl findById(Long id) {
 		Optional<TwinoneMdl> optionalTwinone = twinoneRpo.findById(id);
 		if(optionalTwinone.isPresent()) {
@@ -44,7 +44,7 @@ public class TwinoneSrv {
 		}
 	}
 	
-	// returns all twinone >> RENAME AS returnAll
+	// returns all twinone 
 	public List<TwinoneMdl> returnAll(){
 		return twinoneRpo.findAll();
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/include/head.jsp" />
 
@@ -51,6 +52,8 @@
 			<pre class="textAreaReadOut"><c:out value="${twinone.twinoneDesc}"></c:out></pre>
 
 			<h4>price: $<c:out value="${twinone.price}"></c:out></h4>
+			<p>Due Date: <fmt:formatDate value="${twinone.twinoneDate}" pattern="MMMM dd"/>
+			</p>
 <%-- 			
 			<p>Here are
 			<c:choose>

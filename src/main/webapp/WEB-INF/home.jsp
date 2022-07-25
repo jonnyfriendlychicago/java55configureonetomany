@@ -31,6 +31,7 @@
 						<tr>
 							<th scope="col">id</th>
 							<th scope="col">Name</th>
+							<th scope="col">Created By</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -38,6 +39,7 @@
 							<tr>
 								<td>${record.id}</td>
 								<td><a href="/twinone/${record.id}">${record.twinoneName}</a></td>
+								<td>${record.userMdl.userName} </td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -61,7 +63,7 @@
 					<thead>
 						<tr>
 							<th scope="col">id</th>
-							<th scope="col">twintwoName</th>
+							<th scope="col">Name</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -74,6 +76,29 @@
 					</tbody>
 				</table>
 			</div>
+			
+			<div id="userList">
+			
+				<h3>User List</h3>
+
+				<table class="table table-striped table-dark table-hover">
+					<thead>
+						<tr>
+							<th scope="col">id</th>
+							<th scope="col">userName</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="record" items="${userList}">
+							<tr>
+								<td>${record.id}</td>
+								<td><a href="/profile/${record.id}">${record.userName}</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			
 		</div>
 	</div>
 	

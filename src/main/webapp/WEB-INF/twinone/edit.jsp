@@ -19,14 +19,12 @@
 --%>
 		<div id=about class="card">
 			
-			<%-- <form:form action='/twinone/${twinone.id}' method='post' modelAttribute='twinone'> --%>
 			<form:form action='/twinone/${twinone.id}/edit' method='post' modelAttribute='twinone'>
 	
 				<form:input type="hidden" value="${twinone.id}" path="id" />
 				
 				<%-- <form:input type="hidden" value="${twinone.userMdl.id}" path="userMdl" /> --%>
-				
-				<%-- <form:input type="hidden" value="${assignedCategories}" path="twintwoMdl" /> --%>
+				<form:hidden value="${twinone.userMdl.id}" path="userMdl" /> 
 		
 				<div class="form-group">
 					<form:label path="twinoneName" for="twinoneName">twinoneName</form:label>
@@ -34,6 +32,7 @@
 					<p class="errorText"><form:errors path="twinoneName" />
 					</p>
 				</div>
+				
  	
 				<%-- <div class="form-group">
 					<p>
@@ -62,6 +61,12 @@
 					<form:textarea type="text" class="form-control" path="twinoneDesc" />
 					<p class="errorText"><form:errors path="twinoneDesc" /></p>
 				</div> 	
+				
+				<div class="form-group">
+					<form:label path="twinoneDate" for="twinoneDate">twinoneDate</form:label>
+					<form:input type="date" class="form-control" path="twinoneDate" />
+					<p class="errorText"><form:errors path="twinoneDate" /></p>
+				</div>
 				
 				<div>
 					<button type="submit" class="btn btn-primary">Update</button>
